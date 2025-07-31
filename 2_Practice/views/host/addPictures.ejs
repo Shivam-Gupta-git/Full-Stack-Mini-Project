@@ -1,0 +1,60 @@
+<%- include('../partials/head') %>
+
+<body>
+  <%- include('../partials/nav') %>
+
+<div class="bg-gradient-to-br from-slate-100 to-blue-100 min-h-screen flex items-center justify-center">
+  
+  <div class="w-[90%] max-w-xl bg-white/70 backdrop-blur-md border border-slate-200 rounded-3xl shadow-2xl p-8">
+    <h1 class="text-3xl font-bold text-center text-slate-800 mb-6"><%= editing ? 'Update New Picture' : 'Upload New Picture' %></h1>
+
+    <form action="<%= editing ? '/add-edited-picture' : '/added-pictures' %>" method="POST" enctype="multipart/form-data" class="space-y-5">
+
+      <input type="hidden" name="id" value="<%= editing ? picture._id : '' %>">
+      <!-- Upload Picture -->
+      <div>
+        <label class="block mb-2 font-medium text-slate-700"><%= editing ? 'Update New Picture' : 'Upload New Picture' %></label>
+        <input 
+        type="file" 
+        name="picture" 
+        accept="image/*" 
+        class="block w-full text-sm text-slate-700 border border-slate-300 rounded-xl cursor-pointer bg-white focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700" />
+      </div>
+
+      <!-- Picture Name -->
+      <div>
+        <label class="block mb-2 font-medium text-slate-700">Picture Name</label>
+        <input 
+        type="text" 
+        name="pictureName" 
+        value="<%= editing ? picture.pictureName : '' %>"
+        placeholder="Enter picture name" 
+        required
+        class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent" />
+      </div>
+
+      <!-- Description -->
+      <div>
+        <label class="block mb-2 font-medium text-slate-700">Description</label>
+        <textarea 
+        name="description" 
+        rows="4" 
+        placeholder="Write a description" 
+        required
+        class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"><%= editing ? picture.description : '' %></textarea>
+      </div>
+
+      <!-- Submit Button -->
+      <div>
+        <button type="submit"
+          class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold px-4 py-3 rounded-xl shadow-md hover:shadow-xl transition">
+          <%= editing ? 'Update Picture' : 'Upload Picture'
+          %>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>

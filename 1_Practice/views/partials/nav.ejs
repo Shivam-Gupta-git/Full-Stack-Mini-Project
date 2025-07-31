@@ -1,0 +1,49 @@
+<header class="w-full bg-white/80 backdrop-blur-md shadow-md sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-[70px]">
+
+      <!-- Logo -->
+      <div class="flex-shrink-0 text-purple-700 font-extrabold text-2xl tracking-wide">
+        <a href="/">LOGO</a>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="hidden md:flex gap-8">
+        <a class="<%= currentPage === 'Home Page' ? 'bg-purple-100 text-purple-700' : 'hover:bg-purple-100 hover:text-purple-700' %> text-gray-700 transition px-4 py-2 rounded-xl font-medium"
+          href="/user/home">Home</a>
+        <% if(isLoggedIn){ %>
+
+          <a class="<%= currentPage === 'Add Items' ? 'bg-purple-100 text-purple-700' : 'hover:bg-purple-100 hover:text-purple-700' %> text-gray-700 transition px-4 py-2 rounded-xl font-medium"
+            href="/host/add-items">Add Items</a>
+       <% } %>
+
+         <% if(!isLoggedIn){ %>
+           <a class="<%= currentPage === 'Login' ? 'bg-purple-100 text-purple-700' : 'hover:bg-purple-100 hover:text-purple-700' %> text-gray-700 transition px-4 py-2 rounded-xl font-medium"
+             href="/login">Login</a>
+
+           <a class="<%= currentPage === 'Signup' ? 'bg-purple-100 text-purple-700' : 'hover:bg-purple-100 hover:text-purple-700' %> text-gray-700 transition px-4 py-2 rounded-xl font-medium"
+             href="/signup">Signup</a>
+
+        <% }else{ %>
+          <form action="/logout" method="POST">
+            <button type="submit" class="<%= currentPage === 'Login' ? 'bg-purple-100 text-purple-700' : 'hover:bg-purple-100 hover:text-purple-700' %> text-gray-700 transition px-4 py-2 rounded-xl font-medium" >Logout</button>
+          </form>
+       <%  } %>
+
+      </nav>
+
+
+
+      <!-- Mobile Menu Button -->
+      <div class="md:hidden">
+        <button class="text-purple-700 focus:outline-none" aria-label="Open Menu">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2"
+            viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</header>

@@ -1,0 +1,62 @@
+<div class="relative inline-block text-left mt-3 w-[100%]">
+  <!-- Dropdown Button -->
+  <button id="dropdownButton" type="button"
+    class="inline-flex justify-center w-[30%] rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+    aria-haspopup="true">
+    Add Reviews
+  </button>
+
+  <!-- Dropdown Menu -->
+  <div id="dropdownMenu"
+    class="hidden absolute  w-[100%] p-5 right-0 z-10 mt-2  origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+    
+    <p class="text-sm font-medium">Reviews :</p>
+    <textarea 
+    rows="6" 
+    type="text" 
+      name="BookReviews"
+      placeholder="Enter your honest rewiews"
+      class="w-full border border-gray-500 rounded-2xl p-2 mt-1 outline-none"
+   ></textarea>
+   <div>
+     <p>No of Stars</p>
+     <input type="radio" id="star5" name="rating" value="5">
+    <label for="star5"><span>&#9733;</span></label>
+
+    <!-- Star 4 -->
+    <input type="radio" id="star4" name="rating" value="4">
+    <label for="star4"><span>&#9733;</span></label>
+
+    <!-- Star 3 -->
+    <input type="radio" id="star3" name="rating" value="3">
+    <label for="star3"><span>&#9733;</span></label>
+
+    <!-- Star 2 -->
+    <input type="radio" id="star2" name="rating" value="2">
+    <label for="star2"><span>&#9733;</span></label>
+
+    <!-- Star 1 -->
+    <input type="radio" id="star1" name="rating" value="1">
+    <label for="star1"><span>&#9733;</span></label>
+   </div>
+   <button type="submit" class="bg-slate-500 py-1 px-4 rounded-md mt-2 text-white hover:bg-slate-700">Send</button>
+  </div>
+</div>
+
+<!-- Dropdown Script -->
+<script>
+  const dropdownButton = document.getElementById('dropdownButton');
+  const dropdownMenu = document.getElementById('dropdownMenu');
+
+  // Toggle dropdown when clicking the button
+  dropdownButton.addEventListener('click', () => {
+    dropdownMenu.classList.toggle('hidden');
+  });
+
+  // Close dropdown when clicking outside
+  window.addEventListener('click', function (e) {
+    if (!dropdownButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
+      dropdownMenu.classList.add('hidden');
+    }
+  });
+</script>

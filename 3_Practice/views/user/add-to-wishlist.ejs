@@ -1,0 +1,54 @@
+<%- include('../partials/head') %>
+<body>
+  <%- include('../partials/nav') %>
+  <main class="">
+    <div class="w-[100%]  flex flex-row  gap-12 flex-wrap justify-center mt-10">
+      <% wishlistBooks.forEach(books => { %>
+      <div class="w-[280px] h-[400px] bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow">
+        <!-- Book Image -->
+        <a href="/user/book-details/<%= books._id %>">
+          <div class="h-[60%] w-[100%] flex items-center justify-center relative">
+            <form action="/user/remove-to-wishlist/<%= books._id %>" method="POST">
+              <button type="submit" class="absolute right-5 top-5">❌</button>
+            </form>
+            <img src="<%= books.picture === '' ? books.BookImageUrl : books.picture %>" alt=" no Images" class="h-[90%] w-[90%] shadow-md shadow-gray-400">
+          </div>
+        </a>
+    
+        <div class="h-[40%] w-[100%] flex flex-col items-center p-1">
+          <!-- Book Name -->
+          <h2 class="text-2xs font-semibold text-gray-800"><%= books.BookName %></h2>
+           <!-- Book Auther Name -->
+          <h5 class="text-xs text-gray-500">by <%= books.BookAuther %></h5>
+    
+          
+          <!-- Rating and Review -->
+          <div class="flex items-center space-x-2">
+            <div class="flex items-center space-x-1 text-black px-2 py-0.5 rounded">
+              <span>4.5</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.287 3.975a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.387 2.46a1 1 0 00-.364 1.118l1.287 3.975c.3.921-.755 1.688-1.54 1.118l-3.387-2.46a1 1 0 00-1.175 0l-3.387 2.46c-.784.57-1.838-.197-1.539-1.118l1.287-3.975a1 1 0 00-.364-1.118L2.05 9.402c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69l1.287-3.975z"/></svg>
+            </div>
+            <span class="text-sm text-gray-600">120 Reviews</span>
+          </div>
+          
+          <!-- Price Section -->
+          <div class="flex items-center">
+            <span class="text-lg font-medium text-red-600">₹<%= books.CurrentPrice %>.00</span>
+          </div>
+    
+          <!-- Add to Cart Button -->
+          <div class="w-full flex flex-row justify-around mt-2">
+            <form action="/user/add-to-cart-items/<%= books._id %>" method="POST">
+              <button class="w-full bg-red-500 hover:bg-red-600 text-white py-2 px-4 shadow-md shadow-gray-400 hover:inset-shadow-sm inset-shadow-indigo-500">
+                Add to Cart
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+     <% }) %>
+    </div>
+
+  </main>
+</body>
+</html>

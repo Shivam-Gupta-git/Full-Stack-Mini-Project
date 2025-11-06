@@ -1,0 +1,103 @@
+<%- include('../partials/head') %>
+<body>
+  <%- include('../partials/nav') %>
+  <main>
+    <div class="flex flex-col items-center justify-center bg-orange-50">
+      <!-- Book and Info Container -->
+      <div class="w-[90%] h-[300px] flex flex-row justify-center gap-10 mt-5 z-10">
+        <!-- Book Image Container -->
+        <div class="h-full w-[20%] flex justify-center">
+          <!-- Book Image -->
+          <img src="<%= hostDetailBooks.picture === '' ? hostDetailBooks.BookImageUrl : hostDetailBooks.picture %>" alt=" no Images" class="h-[100%] w-[90%] shadow-md  shadow-slate-600 mt-12">
+        </div>
+       <!-- Book Info Container -->
+        <div class="h-full w-[50%]  mt-12 py-4 px-2">
+        <!-- Book Name -->
+         <h1 class="text-3xl font-normal"><%= hostDetailBooks.BookHighlights %></h1>
+         <!-- Book Auther -->
+         <p class=" font-medium mt-4">by: <%= hostDetailBooks.BookAuther %></p>
+         <!-- Book review Section -->
+         <div class="w-full mt-4 flex flex-row gap-4">
+          <span>4.5⭐️</span>
+          <span class="text-gray-500">12,994 customer reviews</span>
+         </div>
+
+         <!-- Price Section -->
+      <div class="flex items-center space-x-3 mt-3">
+        <span class="text-2xl font-bold text-gray-800">₹ <%= hostDetailBooks.CurrentPrice %></span>
+        <span class="line-through text-gray-500">₹ <%= hostDetailBooks.OriginalPrice %></span>
+        <span class="text-sm text-gray-600 font-semibold">(<%= hostDetailBooks.Discount %>% OFF)</span>
+      </div>
+      <!-- Quality Section -->
+      <div class="mt-3">
+        <label>Quantity: </label>
+        <input type="number" class="w-12 outline-none border border-gray-500 rounded-lg px-1 bg-transparent h-5">
+      </div>
+      <!-- Button Section -->
+      <div class="w-full mt-10 flex flex-row gap-5">
+        <a class="bg-gray-800 py-2 px-3 rounded-2xl text-white text-sm" href="/host/edit-details/<%= hostDetailBooks._id %>?editing=true">Edit Details</a>
+        <form action="/host/delete-details/<%= hostDetailBooks._id %>" method="POST">
+          <button type="submit" class="bg-gray-800 py-2 px-3 rounded-2xl text-white text-sm">Delete Book</button>
+        </form>
+        
+      </div>
+        </div>
+      </div>
+    <!-- Info and Reviews Container -->
+      <div class="w-[85%] h-full bg-slate-100 flex flex-row ">
+        <!-- Description Section -->
+        <div class="w-[50%] h-full p-12">
+          <h1 class="font-medium mt-7 ml-7">Description</h1>
+          <p class="ml-7 mt-3 text-sm"><%= hostDetailBooks.BookDescription %></p>
+          <div class="ml-7 mt-4">
+            <h1 class="text-xl">Rating & Reviews</h1>
+            
+
+
+            <% if (typeof reviews !== 'undefined' && reviews.length > 0) { %>
+              <div class="mt-6">
+                <h2 class="text-lg font-semibold mb-2">All Reviews</h2>
+                <% const avgRating = (reviews.reduce((sum, r) => sum + parseInt(r.rating), 0) / reviews.length).toFixed(1); %>
+                <div class="mb-2">Average Rating: <span class="font-bold"><%= avgRating %></span> ⭐️ (<%= reviews.length %> reviews)</div>
+                <ul class="space-y-2">
+                  <% reviews.forEach(function(review) { %>
+                  <li class=" p-3 rounded shadow relative">
+                   <form action="/host/delete-review/<%= review._id %>" method="POST">
+                    <button type="submit" class="absolute right-5">❌</button>
+                    <input type="hidden" name="id" value="<%= hostDetailBooks._id %>">
+                   </form>
+                    <div class="flex items-center gap-2">
+                      <span class="font-bold"><%= review.rating %>⭐️</span>
+                      <span>User Name</span>
+                    </div>
+                    <div class="text-gray-700 text-sm mt-1"><%= review.BookReviews %></div>
+                  </li>
+                  <% }) %>
+                </ul>
+              </div>
+            <% } else { %>
+              <div class="mt-6 text-gray-500">No reviews yet for this book.</div>
+            <% } %>
+        </div>
+     
+        </div>
+
+        <!-- Editor and Highlights Section -->
+        <div class="w-[50%] h-full py-12 px-4">
+          <h1 class="font-medium mt-7">Editor</h1>
+          <p class="text-sm mt-3"><%= hostDetailBooks.BookAuther %> (auther)</p>
+          <h1 class="font-medium mt-5">Highlights: </h1>
+          <div class="text-sm mt-2 flex flex-col gap-2">
+            <p>BookSeller: <%= hostDetailBooks.BookSeller %></p>
+            <p>Language: <%= hostDetailBooks.BookLanguage %></p>
+            <p>BookBinding: <%= hostDetailBooks.BookBinding %></p>
+            <p>Publisher: <%= hostDetailBooks.Publisher %></p>
+            <p>Pages: <%= hostDetailBooks.NumberOfPages %></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</body>
+</html>

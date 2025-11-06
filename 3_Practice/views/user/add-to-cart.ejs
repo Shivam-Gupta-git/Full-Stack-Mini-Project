@@ -1,0 +1,57 @@
+<%- include('../partials/head') %>
+<body>
+  <%- include('../partials/nav') %>
+  <main>
+    <!-- Main Container -->
+    <div class="bg-orange-50 flex flex-row justify-center gap-10">
+      <!-- Cart Book List Container -->
+      <div class="w-[50%] flex flex-col   p-5">
+        <% cartBookItems.forEach(books => { %>
+          <div class="w-[100%] mt-[50px]  flex items-end">
+           <div class="w-[100%] h-[100%] flex flex-row justify-between relative ounded-2xl shadow-lg shadow-gray-400  hover:shadow-xl transition-shadow duration-300 bg-slate-100 mb-5">
+            <!-- Image Section -->
+            <div class="w-[20%] mt-[-30px] ml-5">
+              <a href="/user/book-details/<%= books._id %>">
+              <img src="<%= books.picture === '' ? books.BookImageUrl : books.picture %>" alt=" no Images" class="shadow-md shadow-gray-400">
+              </a>
+            </div>
+            <!-- Info Section -->
+            <div class="w-[70%] h-[100%]  relative py-3">
+              <form action="/user/remove-to-cart/<%= books.id %>" method="POST">
+                <button type="submit" class="absolute right-5">❌</button>
+              </form>
+              <!-- Book Name -->
+              <h1 class="text-xl font-medium"><%= books.BookName %></h1>
+              <!-- Book Auther Name -->
+              <p class="text-gray-400">by <%= books.BookAuther %></p>
+              <!-- Review Section -->
+              <div class="flex flex-row gap-4 mt-2">
+                <span>4.3 ⭐️</span>
+                <span class="text-gray-400">2,311 reviews</span>
+              </div>
+              <!-- Price Section -->
+              <div class="flex items-center space-x-3 mt-3">
+                <span class="text-2xl font-medium text-gray-800">₹ <%= books.CurrentPrice %></span>
+                <span class="line-through text-gray-500">₹ <%= books.OriginalPrice %></span>
+                <span class="text-sm text-gray-600 font-semibold">(<%= books.Discount %>% OFF)</span>
+              </div>
+              <!-- Book Quantity Section -->
+              <div class="mt-2">
+                <label>Quantity: </label>
+                <input type="number" class="w-12 outline-none border border-gray-500 rounded-lg px-1 bg-transparent h-5">
+              </div>
+              <!-- Book Description -->
+              <p class="text-[7px] mt-2 w-[90%] text-gray-400"><%= books.BookDescription %></p>
+            </div>
+           </div>
+          </div>
+       <% }) %>
+      </div>
+      <!-- Cart Book Price Container -->
+      <div class="w-[30%] h-[400px] mt-[50px] border border-gray-600">
+         
+      </div>
+    </div>
+  </main>
+</body>
+</html>

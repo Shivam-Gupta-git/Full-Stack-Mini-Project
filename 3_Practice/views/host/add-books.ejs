@@ -1,0 +1,202 @@
+ <%- include('../partials/head') %>
+<body>
+  <%- include('../partials/nav') %>
+
+<main class="flex items-center justify-center mt-5">
+  <form 
+  action="<%= editing ? '/host/updated-books' : '/host/added-books' %>" 
+  method="POST" 
+  enctype="multipart/form-data"
+  class="w-[90%] flex flex-col border p-4 rounded-lg shadow-md gap-5" >
+    <!-- Book Name -->
+    <input type="hidden" name="id" value="<%= editing ? bookItems._id : '' %>">
+   <div>
+      <label class="block font-semibold mb-1">Book Name</label>
+      <input 
+      type="text" 
+      name="BookName"
+      value="<%= editing ? bookItems.BookName : '' %>"
+      placeholder="Enter Book Name"
+      required 
+      class="w-full border rounded-lg p-2 focus:outline-blue-500">
+    </div>
+
+    <!-- Book Images File -->
+    <div>
+      <label class="block font-semibold mb-1">Book Image File</label>
+      <input 
+      type="file" 
+      name="picture"
+      accept="image/*"
+      class="w-full border rounded-lg p-2 focus:outline-blue-500">
+    </div>
+
+    <div>
+      <label class="block font-semibold mb-1">Book Image Url</label>
+      <input 
+      type="text" 
+      name="BookImageUrl"
+      value="<%= editing ? bookItems.BookImageUrl : '' %>"
+      placeholder="Book Image Url"
+      class="w-full border rounded-lg p-2 focus:outline-blue-500">
+    </div>
+    <!-- Book Category -->
+   <div>
+      <label class="block font-semibold mb-1 ">Book Category</label>
+      <input 
+      type="text" 
+      name="BookCategory"
+      value="<%= editing ? bookItems.BookCategory : '' %>"
+      placeholder="Enter Book Category"
+      required 
+      class="w-full border rounded-lg p-2 focus:outline-blue-500">
+    </div>
+  
+    <!-- Prices -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div>
+        <label class="block font-semibold mb-1">Current Price (₹)</label>
+        <input 
+        type="number" 
+        name="CurrentPrice"
+        value="<%= editing ? bookItems.CurrentPrice : '' %>"
+        placeholder="e.g., 499" 
+        required
+        class="w-full border rounded-lg p-2 focus:outline-blue-500">
+      </div>
+      <div>
+        <label class="block font-semibold mb-1">Original Price (₹)</label>
+        <input 
+        type="number" 
+        name="OriginalPrice"
+        value="<%= editing ? bookItems.OriginalPrice : '' %>"
+        placeholder="e.g., 799" 
+        required
+        class="w-full border rounded-lg p-2 focus:outline-blue-500">
+      </div>
+      <div>
+        <label class="block font-semibold mb-1">Discount (%)</label>
+        <input type="number" 
+        name="Discount"
+        value="<%= editing ? bookItems.Discount : '' %>"
+        placeholder="e.g., 30" 
+        class="w-full border rounded-lg p-2 focus:outline-blue-500">
+      </div>
+    </div>
+  
+    <!-- Author and Seller -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block font-semibold mb-1">Author</label>
+        <input 
+        type="text"
+        name="BookAuther" 
+        value="<%= editing ? bookItems.BookAuther : '' %>"
+        placeholder="Enter Author Name" 
+        required
+        class="w-full border rounded-lg p-2 focus:outline-blue-500">
+      </div>
+      <div>
+        <label class="block font-semibold mb-1">Seller</label>
+        <input 
+        type="text"
+        name="BookSeller" 
+        value="<%= editing ? bookItems.BookSeller : '' %>"
+        placeholder="Enter Seller Name" 
+        class="w-full border rounded-lg p-2 focus:outline-blue-500">
+      </div>
+    </div>
+  
+    <!-- Highlights -->
+    <div>
+      <label class="block font-semibold mb-1">Highlights</label>
+      <textarea 
+      rows="2" 
+      name="BookHighlights"
+      placeholder="Key Highlights" 
+      class="w-full border rounded-lg p-2 focus:outline-blue-500"><%= editing ? bookItems.BookHighlights : '' %></textarea>
+    </div>
+  
+    <!-- Description -->
+    <div>
+      <label class="block font-semibold mb-1">Description</label>
+      <textarea 
+      rows="5" 
+      name="BookDescription"
+      placeholder="Detailed Description" 
+      class="w-full border rounded-lg p-2 focus:outline-blue-500"><%= editing ? bookItems.BookDescription : '' %></textarea>
+    </div>
+  
+    <!-- Binding, Publishing Date, Publisher -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div>
+        <label class="block font-semibold mb-1">Binding</label>
+        <input 
+        type="text" 
+        name="BookBinding"
+        value="<%= editing ? bookItems.BookBinding : '' %>"
+        placeholder="e.g., Paperback" 
+        class="w-full border rounded-lg p-2 focus:outline-blue-500">
+      </div>
+      <div>
+        <label class="block font-semibold mb-1">Publishing Date</label>
+        <input 
+        type="date" 
+        name="Bookdate"
+        value="<%= editing ? bookItems.Bookdate : '' %>"
+        class="w-full border rounded-lg p-2 focus:outline-blue-500">
+      </div>
+      <div>
+        <label class="block font-semibold mb-1">Publisher</label>
+        <input 
+        type="text" 
+        name="Publisher"
+        value="<%= editing ? bookItems.Publisher : '' %>"
+        placeholder="Enter Publisher Name" class="w-full border rounded-lg p-2 focus:outline-blue-500">
+      </div>
+    </div>
+  
+    <!-- Edition, Number of Pages, Language -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div>
+        <label class="block font-semibold mb-1">Edition</label>
+        <input 
+        type="text" 
+        name="Edition"
+        value="<%= editing ? bookItems.Edition : '' %>"
+        placeholder="e.g., 2nd Edition" 
+        class="w-full border rounded-lg p-2 focus:outline-blue-500">
+      </div>
+      <div>
+        <label class="block font-semibold mb-1">Number of Pages</label>
+        <input 
+        type="number" 
+        name="NumberOfPages"
+        value="<%= editing ? bookItems.NumberOfPages : '' %>"
+        placeholder="e.g., 350" 
+        class="w-full border rounded-lg p-2 focus:outline-blue-500">
+      </div>
+      <div>
+        <label class="block font-semibold mb-1">Language</label>
+        <input 
+        type="text" 
+        name="BookLanguage"
+        value="<%= editing ? bookItems.BookLanguage : '' %>"
+        placeholder="e.g., English" 
+        class="w-full border rounded-lg p-2 focus:outline-blue-500">
+      </div>
+    </div>
+    <!-- Submit Button -->
+    <div class="text-center">
+      <button 
+      type="submit" 
+      class="bg-blue-600 text-white px-6 py-2 rounded-xl hover:bg-blue-700">
+      <%= editing ? 'Update Book Details' : 'Submit Book Details' %>
+      </button>
+    </div>
+  </form>
+</div>
+</main>
+
+</body>
+</html>

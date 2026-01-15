@@ -2,8 +2,8 @@ import { Contact } from "../model/contact.model.js";
 
 export const addContact = async (req, res) => {
   try {
-    const {name, number} = req.body;
-    if([name, number].some((fields) => !fields || fields?.trim() === '')){
+    const {name, number, email} = req.body;
+    if([name, number, email].some((fields) => !fields || fields?.trim() === '')){
       return req.status(400).json({success: false, message: 'Name and Number is required'})
     }
 
@@ -14,7 +14,8 @@ export const addContact = async (req, res) => {
 
     const newContact = await Contact({
       name,
-      number
+      number,
+      email
     });
 
     await newContact.save();
@@ -34,8 +35,8 @@ export const updateContact = async (req, res) => {
       return res.status(400).json({success: false, message: 'contact Id is required'})
     }
 
-    const { name, number } = req.body;
-    if (!name || !number) {
+    const { name, number, email } = req.body;
+    if (!name || !number || !email) {
       return res
         .status(400)
         .json({ success: false, message: "All fields are required" });
@@ -43,7 +44,7 @@ export const updateContact = async (req, res) => {
 
     const updatedContact = await Contact.findByIdAndUpdate(
       id,
-      { name, number },
+      { name, number, email },
       { new: true }
     ).select("-number");
 
@@ -88,6 +89,55 @@ export const getAllContact = async (req, res) => {
   try {
     const contact = await Contact.find()
     return res.status(200).json({success: true, data: contact})
+  } catch (error) {
+    console.log('Error', error)
+    res.status(500).json({success: false, message: error.message})
+  }
+}
+
+export const getStatus = async (req, res) => {
+  try {
+    const total = await Contact.countDocuments();
+    const active = await Contact.countDocuments({status: 'Active'})
+    const Inactive = await Contact.countDocuments({status: 'Inactive'})
+
+    res.status(200).json({success: true, total, active, Inactive})
+  } catch (error) {
+    console.log('Error', error)
+    res.status(500).json({success: false, message: error.message})
+  }
+}
+
+export const searchContact = async (req, res) => {
+  try {
+    const query = req.params.query;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const searchQuery = {
+      $or: [
+        {name: {$regex: query, $options: 'i'}},
+        {number: {$regex: query, $options: 'i'}},
+        {email: {$regex: query, $options: 'i'}}
+      ]
+    }
+
+    const contact = await Contact.find(searchQuery)
+    .sort({createdAt: -1})
+    .skip(skip)
+    .limit(limit)
+    
+    const totalContact = await Contact.countDocuments(searchQuery);
+
+    res.status(200)
+    .json
+    ({
+      contact,
+      currentPage: page,
+      totalPage: Math.ceil(totalContact/limit),
+      totalContact: totalContact,
+    })
   } catch (error) {
     console.log('Error', error)
     res.status(500).json({success: false, message: error.message})

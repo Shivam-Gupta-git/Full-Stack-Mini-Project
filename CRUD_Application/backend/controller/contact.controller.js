@@ -2,20 +2,28 @@ import { Contact } from "../model/contact.model.js";
 
 export const addContact = async (req, res) => {
   try {
-    const {name, number, email} = req.body;
-    if([name, number, email].some((fields) => !fields || fields?.trim() === '')){
-      return req.status(400).json({success: false, message: 'Name and Number is required'})
+    const {name, number, email, status} = req.body;
+
+    if (!["Active", "Inactive"].includes(status)) {
+      status = "Active";
     }
 
-    const existContact = await Contact.findOne({number})
+    if([name, number, email].some((fields) => !fields || fields?.trim() === '')){
+      return req.status(400).json({success: false, message: 'All fields are required'})
+    }
+
+    const existContact = await Contact.findOne({
+      $or: [{number}, {email}]
+    })
     if(existContact){
-      return res.status(400).json({success: false, message: 'Number is allready exist'})
+      return res.status(400).json({success: false, message: 'User is allready exist'})
     }
 
     const newContact = await Contact({
       name,
       number,
-      email
+      email,
+      status
     });
 
     await newContact.save();

@@ -3,7 +3,7 @@ import { UserContext } from "../context/UserContext";
 import axios from "axios";
 
 function UpdateUser({ closeUpdateModel, selectedUser }) {
-  const { backendURL, getAllUserData } = useContext(UserContext);
+  const { backendURL,  getPaginationAPI } = useContext(UserContext);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -49,7 +49,7 @@ function UpdateUser({ closeUpdateModel, selectedUser }) {
       );
 
       if (res.data.success) {
-        getAllUserData();
+        getPaginationAPI();
         closeUpdateModel();
       } else {
         setErrorMessage(res.data.message || "Update failed");

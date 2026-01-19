@@ -118,25 +118,16 @@ export const getStatus = async (req, res) => {
 
 export const searchContact = async (req, res) => {
   try {
-    const query = req.params.query;
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
+    const page = Math.max(parseInt(req.query.page) || 1);
+    const limit = Math.max(parseInt(req.query.limit) || 10);
     const skip = (page - 1) * limit;
 
-    const searchQuery = {
-      $or: [
-        {name: {$regex: query, $options: 'i'}},
-        {number: {$regex: query, $options: 'i'}},
-        {email: {$regex: query, $options: 'i'}}
-      ]
-    }
-
-    const contact = await Contact.find(searchQuery)
+    const contact = await Contact.find()
     .sort({createdAt: -1})
     .skip(skip)
     .limit(limit)
     
-    const totalContact = await Contact.countDocuments(searchQuery);
+    const totalContact = await Contact.countDocuments();
 
     res.status(200)
     .json

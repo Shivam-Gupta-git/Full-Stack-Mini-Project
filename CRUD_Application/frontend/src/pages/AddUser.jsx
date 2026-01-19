@@ -3,7 +3,7 @@ import axios from "axios";
 import { UserContext } from "../context/UserContext";
 
 function AddUser({ closeModal }) {
-  const { backendURL, getAllUserData } = useContext(UserContext);
+  const { backendURL, getAllUserData, getPaginationAPI } = useContext(UserContext);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -37,7 +37,8 @@ function AddUser({ closeModal }) {
 
       if (response.data.success) {
         closeModal(false);
-        getAllUserData();
+        getPaginationAPI();
+        getAllUserData()
         alert("✅ User successfully added");
       } else {
         setErrorMessage(response.data.message || "Add User failed");

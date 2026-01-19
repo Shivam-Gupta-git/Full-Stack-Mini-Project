@@ -9,6 +9,6 @@ contactRouter.patch('/updatedContact/:id', findContact, updateContact);
 contactRouter.delete('/deleteContacd/:id', findContact, deleteContact);
 contactRouter.get('/getallcontact', getAllContact);
 contactRouter.get('/status', getStatus);
-contactRouter.get('/search/:query', searchContact)
+contactRouter.get('/search', searchContact)
 
 export { contactRouter }

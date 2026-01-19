@@ -1,5 +1,5 @@
-import { useState } from "react";
-import AddUser from "../pages/AddUser";
+import { Suspense, lazy, useState } from "react";
+const AddUser = lazy(() => import('../pages/AddUser'))
 
 function Header() {
   const [showLogin, setShowLogin] = useState(false);
@@ -27,7 +27,10 @@ function Header() {
     </div>
 
     {
-      showLogin && <AddUser closeModal={() => setShowLogin(false)}/>
+      showLogin && 
+      <Suspense fallback={<p className="text-gray-700">Loading...</p>}>
+        <AddUser closeModal={() => setShowLogin(false)}/>
+      </Suspense> 
     }
     </>
   );

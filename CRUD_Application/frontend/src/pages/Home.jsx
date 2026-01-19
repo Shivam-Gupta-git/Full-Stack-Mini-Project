@@ -1,7 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { Suspense, lazy, useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
-import UpdateUser from "./UpdateUser";
 import axios from "axios";
+const UpdateUser = lazy(() => import('./UpdateUser'))
 
 function Home() {
   const { users, getAllUserData, backendURL, loading } = useContext(UserContext);
@@ -147,10 +147,12 @@ function Home() {
 
       {/* Update Modal */}
       {showEditModal && selectedUser && (
-        <UpdateUser
-          closeUpdateModel={() => setShowEditModal(false)}
-          selectedUser={selectedUser}
-        />
+        <Suspense fallback={<p className="text-gray-700">Loading</p>}>
+          <UpdateUser
+            closeUpdateModel={() => setShowEditModal(false)}
+            selectedUser={selectedUser}
+          />
+        </Suspense>
       )}
     </div>
   );

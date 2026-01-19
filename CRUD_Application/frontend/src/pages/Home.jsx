@@ -114,7 +114,7 @@ function Home() {
 
       {/* Table */}
       <div className="overflow-x-auto bg-white rounded-xl shadow">
-        <table className="w-full min-w-[600px] text-left">
+        <table className="w-full min-w-150 text-left">
           <thead className="bg-gray-50">
             <tr>
               <th className="p-4 text-gray-700">Name</th>
